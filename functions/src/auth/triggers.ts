@@ -1,6 +1,6 @@
-import functions = require("firebase-functions");
-import {getFirestore} from "firebase-admin/firestore";
-import {firestore} from "firebase-admin";
+import functions = require('firebase-functions');
+import { getFirestore } from 'firebase-admin/firestore';
+import { firestore } from 'firebase-admin';
 
 type OkBossUser = {
   uid: string;
@@ -16,7 +16,7 @@ type OkBossUser = {
 };
 
 const createUserDoc = functions.auth.user().onCreate((userRecord) => {
-  console.log("### Create User doc for user " + userRecord.displayName);
+  console.log('### Create User doc for user ' + userRecord.displayName);
   const user = {} as OkBossUser;
   user.uid = userRecord.uid;
   user.photoUrl = userRecord.photoURL;
@@ -26,7 +26,7 @@ const createUserDoc = functions.auth.user().onCreate((userRecord) => {
   user.createdDtm = firestore.Timestamp.fromDate(new Date());
   user.updatedDtm = firestore.Timestamp.fromDate(new Date());
   // TODO add try/catch
-  getFirestore().collection("users").doc(user.uid).set(user);
+  getFirestore().collection('users').doc(user.uid).set(user);
 });
 
-export {OkBossUser, createUserDoc};
+export { OkBossUser, createUserDoc };
