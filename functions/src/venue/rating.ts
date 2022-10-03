@@ -1,7 +1,7 @@
 import functions = require("firebase-functions");
 import {firestore} from "firebase-admin";
 import {getFirestore} from "firebase-admin/firestore";
-import {calculateAverageFiveStarRating} from "../ratings";
+import {calculateAverageFiveStarRating} from "../calculate";
 
 type VenueRating = {
   id: string;
