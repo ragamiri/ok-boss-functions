@@ -8,11 +8,42 @@ type VenueRating = {
   venueId: string;
   authorId: string;
   authorDisplayName: string;
-  rating: number;
-  comment: string | undefined;
-  createdDtm: firestore.Timestamp;
-  updatedDtm: firestore.Timestamp;
+  rating?: number | undefined;
+  comment?: string | undefined;
+  createdDtm?: firestore.Timestamp;
+  updatedDtm?: firestore.Timestamp;
 };
+
+const setDefaultsWhenVenueRatingCreated = functions.firestore
+    .document("venues/{venueId}/ratings/{ratingId}")
+    .onCreate((snap, context) => {
+      const venueId = context.params.venueId;
+      const ratingId = context.params.ratingId;
+      console.debug("Creating rating " + ratingId + " for venue " + venueId);
+      return snap.ref.set(
+          {
+            id: ratingId,
+            venueId: venueId,
+            createdDtm: firestore.FieldValue.serverTimestamp(),
+            updatedDtm: firestore.FieldValue.serverTimestamp(),
+          },
+          {merge: true}
+      );
+    });
+
+const setUpdatedDtmWhenVenueRatingUpdated = functions.firestore
+    .document("venues/{venueId}/ratings/{ratingId}")
+    .onCreate((snap, context) => {
+      const venueId = context.params.venueId;
+      const ratingId = context.params.ratingId;
+      console.debug("Set updatedDtm for " + ratingId + " and venue " + venueId);
+      return snap.ref.set(
+          {
+            updatedDtm: firestore.FieldValue.serverTimestamp(),
+          },
+          {merge: true}y
+      );
+    });
 
 const calculateAverageRatingForVenue = functions.firestore
     .document("venues/{venueId}/ratings/{ratingId}")
@@ -21,16 +52,16 @@ const calculateAverageRatingForVenue = functions.firestore
       const venueId = context.params.venueId;
       console.log("Calculating rating for " + venueId);
       const db = getFirestore();
-      let numberOfRatings = 0;
       db.collection("venues/" + venueId + "/ratings")
           .get()
           .then((snap) => {
-            numberOfRatings = snap.size;
             const ratings: number[] = [];
             if (snap.size > 0) {
               snap.forEach((doc) => {
                 const userRating = doc.data() as VenueRating;
-                ratings.push(userRating.rating);
+                if (userRating.rating) {
+                  ratings.push(userRating.rating);
+                }
               });
               const rating = calculateAverageFiveStarRating(ratings);
               db.collection("venues").doc(venueId).update({rating: rating});
@@ -42,9 +73,9 @@ const calculateAverageRatingForVenue = functions.firestore
                 "Error calculating venue " + venueId + " ratings: " + error
             );
           });
-      console.debug("Processed " + numberOfRatings +
-          " ratings for venue " + venueId);
       return;
     });
 
-export {calculateAverageRatingForVenue};
+export {calculateAverageRatingForVenue,
+  setDefaultsWhenVenueRatingCreated,
+  setUpdatedDtmWhenVenueRatingUpdated};
