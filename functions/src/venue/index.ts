@@ -2,10 +2,10 @@ import {calculateAverageRatingForVenue,
   setUpdatedDtmWhenVenueRatingUpdated,
   setDefaultsWhenVenueRatingCreated} from "./rating";
 import {setDefaultsWhenVenueCreated,
-  setTimestampsWhenVenueUpdated} from "./venue";
+  setUpdatedDtmWhenVenueUpdated} from "./venue";
 
 export {calculateAverageRatingForVenue,
   setDefaultsWhenVenueCreated,
-  setTimestampsWhenVenueUpdated,
+  setUpdatedDtmWhenVenueUpdated,
   setUpdatedDtmWhenVenueRatingUpdated,
   setDefaultsWhenVenueRatingCreated};

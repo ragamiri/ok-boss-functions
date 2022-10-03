@@ -33,15 +33,15 @@ const setDefaultsWhenVenueRatingCreated = functions.firestore
 
 const setUpdatedDtmWhenVenueRatingUpdated = functions.firestore
     .document("venues/{venueId}/ratings/{ratingId}")
-    .onCreate((snap, context) => {
+    .onUpdate((snap, context) => {
       const venueId = context.params.venueId;
       const ratingId = context.params.ratingId;
       console.debug("Set updatedDtm for " + ratingId + " and venue " + venueId);
-      return snap.ref.set(
+      return snap.after.ref.set(
           {
             updatedDtm: firestore.FieldValue.serverTimestamp(),
           },
-          {merge: true}y
+          {merge: true}
       );
     });
 

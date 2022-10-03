@@ -15,10 +15,10 @@ const setDefaultsWhenVenueCreated = functions.firestore
       );
     });
 
-const setTimestampsWhenVenueUpdated = functions.firestore
+const setUpdatedDtmWhenVenueUpdated = functions.firestore
     .document("venues/{venueId}")
-    .onCreate((snap, context) => {
-      return snap.ref.set(
+    .onUpdate((snap, context) => {
+      return snap.after.ref.set(
           {
             updatedDtm: firestore.FieldValue.serverTimestamp(),
           },
@@ -26,4 +26,4 @@ const setTimestampsWhenVenueUpdated = functions.firestore
       );
     });
 
-export {setDefaultsWhenVenueCreated, setTimestampsWhenVenueUpdated};
+export {setDefaultsWhenVenueCreated, setUpdatedDtmWhenVenueUpdated};
