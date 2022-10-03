@@ -3,10 +3,20 @@ import {calculateAverageRatingForVenue,
   setUpdatedDtmWhenVenueUpdated,
   setDefaultsWhenVenueCreated,
   setDefaultsWhenVenueRatingCreated,
-  setUpdatedDtmWhenVenueRatingUpdated} from "./venue";
+  setUpdatedDtmWhenVenueRatingUpdated,
+  setUpdatedDtmWhenApplicationUpdated} from "./venue";
 import * as admin from "firebase-admin";
+
+let setDefaultsWhenApplicationsCreated;
+
 admin.initializeApp();
 
-export {createUserDoc, calculateAverageRatingForVenue,
-  setUpdatedDtmWhenVenueUpdated, setDefaultsWhenVenueCreated,
-  setDefaultsWhenVenueRatingCreated, setUpdatedDtmWhenVenueRatingUpdated};
+export {
+  createUserDoc,
+  calculateAverageRatingForVenue,
+  setUpdatedDtmWhenVenueUpdated,
+  setDefaultsWhenVenueCreated,
+  setDefaultsWhenVenueRatingCreated,
+  setUpdatedDtmWhenVenueRatingUpdated,
+  setDefaultsWhenApplicationsCreated,
+  setUpdatedDtmWhenApplicationUpdated};
