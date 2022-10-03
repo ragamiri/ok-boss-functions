@@ -1,3 +1,3 @@
-import { createUserDoc } from './triggers';
+import {createUserDoc} from "./triggers";
 
-export { createUserDoc };
+export {createUserDoc};

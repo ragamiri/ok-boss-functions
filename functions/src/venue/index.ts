@@ -1,3 +1,3 @@
-import { calculateAverageRatingForVenue } from './calculate-rating';
+import {calculateAverageRatingForVenue} from "./calculate-rating";
 
-export { calculateAverageRatingForVenue };
+export {calculateAverageRatingForVenue};

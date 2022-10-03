@@ -37,18 +37,18 @@ function calculateAverageFiveStarRating(ratings: number[]): number {
     }
   });
   if (ratings.length && ratings.length > 0) {
-    console.log('Num Ratings: ' + +ratings.length);
+    console.log("Num Ratings: " + +ratings.length);
     console.log(
-      oneStarRatings.length +
-        ' ' +
+        oneStarRatings.length +
+        " " +
         twoStarRatings.length +
-        ' ' +
+        " " +
         threeStarRatings.length +
-        ' ' +
+        " " +
         fourStarRatings.length +
-        ' ' +
+        " " +
         fiveStarRatings.length +
-        ' '
+        " "
     );
     const averageRating =
       (1 * oneStarRatings.length +
@@ -63,4 +63,4 @@ function calculateAverageFiveStarRating(ratings: number[]): number {
   }
 }
 
-export { calculateAverageFiveStarRating };
+export {calculateAverageFiveStarRating};
